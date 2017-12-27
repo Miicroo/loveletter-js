@@ -66,4 +66,8 @@ class Deck {
 	showAll() {
 		return this.cards;
 	}
+
+	isEmpty() {
+		return tis.cards.length == 0;
+	}
 }
