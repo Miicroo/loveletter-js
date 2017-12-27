@@ -6,8 +6,8 @@ class Player {
 		this._currentCard = undefined;
 
 		this._playSubject = playSubject;
-		this._newCardSubscription = newCardSubject.subscribe(this.receiveNewCard);
-		this._gameUpdateSubscription = updateSubject.subscribe(this.receiveGameUpdate);
+		this._newCardSubscription = newCardSubject.subscribe(card => this.receiveNewCard(card));
+		this._gameUpdateSubscription = updateSubject.subscribe(update => this.receiveGameUpdate(update));
 	}
 
 	receiveNewCard(newCard) {

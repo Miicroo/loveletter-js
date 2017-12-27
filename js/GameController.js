@@ -61,7 +61,7 @@ class GameRound {
 	_playCurrentPlayer() {
 		const playerState = this._playerStates[this._currentPlayer];
 
-		this._currentPlaySubscription = playerState.getPlayCardSubject().subscribe(this._playCard);
+		this._currentPlaySubscription = playerState.getPlayCardSubject().subscribe(playedCardInfo => this._playCard(playedCardInfo));
 		playerState.getReceiveCardSubject().onNext(this._deck.draw());
 	}
 
@@ -97,8 +97,17 @@ class PlayerState {
 	}
 
 	_setUpListeners() {
-		this._receiveCardSubject.subscribe(card => this._currentCards.push(card));
-		this._playCardSubject.subscribe(card => this._currentCards.remove(card));
+		this._receiveCardSubject.subscribe(card => this._addCard(card));
+		this._playCardSubject.subscribe(card => this._removeCard(card));
+	}
+
+	_addCard(card) {
+		this._currentCards.push(card);
+	}
+
+	_removeCard(card) {
+		const index = this._currentCards.indexOf(card);
+		this._currentCards.splice(index, 1);
 	}
 
 	getCurrentCards() {
