@@ -99,7 +99,7 @@ class GameRound {
 
 	_removeCurrentPlayer() {
 		const shouldAdjustCurrentIndex = this._currentPlayerIndex === this._playerIndicesLeftInGame.length - 1;
-		this._playerIndicesLeftInGame.slice(this._currentPlayerIndex, 1);
+		this._playerIndicesLeftInGame.splice(this._currentPlayerIndex, 1);
 		if(shouldAdjustCurrentIndex) {
 			this._currentPlayerIndex--;
 		}
@@ -124,7 +124,18 @@ class GameRound {
 			this._playCurrentPlayer();
 		} else {
 			console.log(this._players);
+			this._evaluateWinner();
 		}
+	}
+
+	_evaluateWinner() {
+		const winner = this._playerIndicesLeftInGame.map(index => {return {'player': this._players[index], 'card': this._playerStates[index].getCurrentCard()}; })
+									 .reduce((maxPlayer, currentPlayer) => {
+									 	return currentPlayer.card.getValue() > maxPlayer.card.getValue() ? currentPlayer : maxPlayer;
+									 }, {'card': (new Card(-1, 'Dummy', 0))});
+		console.log(this._playerIndicesLeftInGame);
+		console.log(this._playerStates);
+		console.log(winner);
 	}
 
 	_getCurrentPlayerIndex() {
@@ -150,7 +161,7 @@ class PlayerState {
 
 	_setUpListeners() {
 		this._receiveCardSubject.subscribe(card => this._addCard(card));
-		this._playCardSubject.subscribe(card => this._removeCard(card));
+		this._playCardSubject.subscribe(cardInfo => this._removeCard(cardInfo.card));
 	}
 
 	_addCard(card) {
@@ -160,6 +171,10 @@ class PlayerState {
 	_removeCard(card) {
 		const index = this._currentCards.indexOf(card);
 		this._currentCards.splice(index, 1);
+	}
+
+	getCurrentCard() {
+		return this._currentCards[0];
 	}
 
 	getCurrentCards() {
