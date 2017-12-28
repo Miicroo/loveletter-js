@@ -1,15 +1,83 @@
 <html>
 	<head>
 		<title>Debug</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<script type="text/javascript" src="js/rx.js"></script>
 		
 		<script type="text/javascript" src="js/Debug.js"></script>
 		<script type="text/javascript" src="js/Card.js"></script>
 		<script type="text/javascript" src="js/Deck.js"></script>
 		<script type="text/javascript" src="js/Player.js"></script>
+		<script type="text/javascript" src="js/HumanPlayer.js"></script>
 		<script type="text/javascript" src="js/GameController.js"></script>
 	</head>
 	<body>
-		<div id="debug"></div>
+		<div id="welcome">
+			<h3>Welcome</h3>
+			Please specify number of players:
+			<input id="numberOfPlayers" type="number" value="4" step="1" min="2" max="4" onkeyup="checkStartGame(event)" />
+			<input type="button" name="wes" value = "Start!" onclick="startGame()" />
+			<script>
+				function startGame() {
+					const numberOfPlayers = document.querySelector('#numberOfPlayers').value;
+
+					// Remove original input, no longer needed
+					const welcomeNode = document.querySelector('#welcome');
+					welcomeNode.parentNode.removeChild(welcomeNode);
+
+					// Make gameboard (but not necessarily players visible)
+					const gameboard = document.querySelector('#gameboard');
+					gameboard.style.visibility = 'visible';
+
+					// Start game
+					const game = new Game(numberOfPlayers);
+					game.start();
+				}
+
+				function checkStartGame(event) {
+					if(event.key === 'Enter') {
+						startGame();
+					}
+				}
+			</script>
+		</div>
+		<div id="gameboard" style="visibility: hidden;">
+			<div class="you">
+				<span class="name">You</span><br />
+				<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
+				<img src = "images/princess.jpg" style="z-index: 1; position: absolute; left: 50px;">
+				<img src = "images/princess.jpg" style="z-index: 2; position: absolute; left: 100px;">
+				<img src = "images/princess.jpg" style="z-index: 3; position: absolute; left: 150px;">
+				<img src = "images/princess.jpg" style="z-index: 4; position: absolute; left: 200px;">
+				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">
+			</div>
+			<div id="player1" class="bot1">
+				<span class="name">Bot 1</span>
+				<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
+				<img src = "images/princess.jpg" style="z-index: 1; position: absolute; left: 50px;">
+				<img src = "images/princess.jpg" style="z-index: 2; position: absolute; left: 100px;">
+				<img src = "images/princess.jpg" style="z-index: 3; position: absolute; left: 150px;">
+				<img src = "images/princess.jpg" style="z-index: 4; position: absolute; left: 200px;">
+				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">
+			</div>
+			<div id="player2" class="bot2">
+				<span class="name">Bot 2</span><br />
+				<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
+				<img src = "images/princess.jpg" style="z-index: 1; position: absolute; left: 50px;">
+				<img src = "images/princess.jpg" style="z-index: 2; position: absolute; left: 100px;">
+				<img src = "images/princess.jpg" style="z-index: 3; position: absolute; left: 150px;">
+				<img src = "images/princess.jpg" style="z-index: 4; position: absolute; left: 200px;">
+				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">
+			</div>
+			<div id="player3" class="bot3">
+				<span class="name">Bot 3</span>
+				<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
+				<img src = "images/princess.jpg" style="z-index: 1; position: absolute; left: 50px;">
+				<img src = "images/princess.jpg" style="z-index: 2; position: absolute; left: 100px;">
+				<img src = "images/princess.jpg" style="z-index: 3; position: absolute; left: 150px;">
+				<img src = "images/princess.jpg" style="z-index: 4; position: absolute; left: 200px;">
+				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">
+			</div>
+		</div>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-class Player {
+class HumanPlayer {
 	constructor(name) {
 		this._name = name;
 		this._opponents = [];
@@ -30,6 +30,8 @@ class Player {
 
 		if(action === 'playerAdded') {
 			this._opponents.push(data.player);
+			const divId = data.player.replace(' ', '').toLowerCase();
+			document.querySelector(`#${divId}`).style.visibility = 'visible';
 		} else if(action === 'playerRemoved') {
 			const index = this._opponents.indexOf(data.player);
 			this._opponents.splice(index, 1);

@@ -1,0 +1,32 @@
+.you {
+    position: absolute;
+    bottom: 276px;
+}
+
+.bot1 {
+    position: absolute;
+    left: 266px;
+    top: 1%;
+    transform: rotate(90deg);
+    visibility: hidden;
+}
+
+.bot2 {
+    position: absolute;
+    top: 276px;
+    width: 99%;
+    transform: rotate(180deg);
+    visibility: hidden;
+}
+
+.bot3 {
+    position: absolute;
+    bottom: 1%;
+    right: 266px;
+    transform: rotate(-90deg);
+    visibility: hidden;
+}
+
+.name {
+    font-weight: bold;
+}
