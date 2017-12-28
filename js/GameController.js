@@ -11,7 +11,7 @@ class Game {
 
 	_createPlayers(count) {
 		const players = [];
-		players[0] = new HumanPlayer(`You`);
+		players[0] = new HumanPlayer(`Player 0`);
 		for(let i = 1; i<count; i++) {
 			players[i] = new Player(`Player ${i}`);
 		}
@@ -30,7 +30,8 @@ class GameRound {
 		this._deck = this._createNewDeck();
 		this._stowedAway = this._deck.draw();
 
-		this._currentPlayer = 0;
+		this._currentPlayerIndex = 0;
+		this._playerIndicesLeftInGame = [...Array(players.length).keys()];
 		this._players = players;
 		this._playerStates = [];
 
@@ -68,20 +69,47 @@ class GameRound {
 	}
 
 	_playCurrentPlayer() {
-		const playerState = this._playerStates[this._currentPlayer];
+		const playerState = this._playerStates[this._getCurrentPlayerIndex()];
 
 		this._currentPlaySubscription = playerState.getPlayCardSubject().subscribe(playedCardInfo => this._playCard(playedCardInfo));
 		playerState.getReceiveCardSubject().onNext(this._deck.draw());
 	}
 
 	_playCard(cardInfo) {
-		console.log(`Player ${this._currentPlayer} played`);
-		console.log(cardInfo);
-		this._playerStates.forEach(state => {
-			state.getGameUpdateSubject().onNext({'action': 'cardPlayed', 'data': {'player': this._currentPlayer, 'card': cardInfo}});
-		});
+		const currentPlayerName = this._players[this._getCurrentPlayerIndex()].getName();
+		this._sendUpdateToAllPlayers({'action': 'cardPlayed', 'data': {'player': currentPlayerName, 'card': cardInfo.card}});
+
+		this._evaluatePlay(cardInfo);
 
 		this._nextPlayer();
+	}
+
+	_evaluatePlay(cardInfo) {
+		const currentPlayerName = this._players[this._getCurrentPlayerIndex()].getName();
+		console.log(`${currentPlayerName} played`);
+		console.log(cardInfo);
+
+		if(cardInfo.card.getDisplayName() === 'Princess') {
+			this._sendUpdateToAllPlayers({'action': 'playerRemoved', 'data': {'player': currentPlayerName}});
+			this._removeCurrentPlayer();
+		} else if(cardInfo.card.getDisplayName() === 'Countess') {
+			// Do nothing, countess has 0 effect
+		}
+	}
+
+	_removeCurrentPlayer() {
+		const shouldAdjustCurrentIndex = this._currentPlayerIndex === this._playerIndicesLeftInGame.length - 1;
+		this._playerIndicesLeftInGame.slice(this._currentPlayerIndex, 1);
+		if(shouldAdjustCurrentIndex) {
+			this._currentPlayerIndex--;
+		}
+
+	}
+
+	_sendUpdateToAllPlayers(update) {
+		this._playerStates.forEach(state => {
+			state.getGameUpdateSubject().onNext(update);
+		});
 	}
 
 	_nextPlayer() {
@@ -90,13 +118,17 @@ class GameRound {
 			this._currentPlaySubscription = undefined;
 		}
 
-		this._currentPlayer = (this._currentPlayer + 1) % this._players.length;
+		this._currentPlayerIndex = (this._currentPlayerIndex + 1) % this._playerIndicesLeftInGame.length;
 
 		if(!this._deck.isEmpty()) {
 			this._playCurrentPlayer();
 		} else {
 			console.log(this._players);
 		}
+	}
+
+	_getCurrentPlayerIndex() {
+		return this._playerIndicesLeftInGame[this._currentPlayerIndex];
 	}
 }
 

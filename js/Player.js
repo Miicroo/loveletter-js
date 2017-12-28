@@ -44,9 +44,8 @@ class Player {
 		const tmp = this._currentCard;
 		this._currentCard = drawnCard;
 
-		// console.log(`${this._name} wish to play card`);
-		// console.log(tmp);
-		this._playSubject.onNext(tmp);
+		const cardInfo = {'card': tmp};
+		this._playSubject.onNext(cardInfo);
 	}
 
 	getName() {

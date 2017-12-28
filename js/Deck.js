@@ -5,12 +5,12 @@ class Deck {
 	}
 
 	_addCards() {
-		// 5 knights
-		this.cards.push(new Card(1, 'Knight', 2));
-		this.cards.push(new Card(1, 'Knight', 2));
-		this.cards.push(new Card(1, 'Knight', 2));
-		this.cards.push(new Card(1, 'Knight', 2));
-		this.cards.push(new Card(1, 'Knight', 2));
+		// 5 guards
+		this.cards.push(new Card(1, 'Guard', 2));
+		this.cards.push(new Card(1, 'Guard', 2));
+		this.cards.push(new Card(1, 'Guard', 2));
+		this.cards.push(new Card(1, 'Guard', 2));
+		this.cards.push(new Card(1, 'Guard', 2));
 
 		// 2 priests
 		this.cards.push(new Card(2, 'Priest', 1));

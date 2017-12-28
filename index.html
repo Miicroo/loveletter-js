@@ -27,7 +27,7 @@
 
 					// Make gameboard (but not necessarily players visible)
 					const gameboard = document.querySelector('#gameboard');
-					gameboard.style.visibility = 'visible';
+					gameboard.classList.remove('hidden');
 
 					// Start game
 					const game = new Game(numberOfPlayers);
@@ -41,42 +41,24 @@
 				}
 			</script>
 		</div>
-		<div id="gameboard" style="visibility: hidden;">
-			<div class="you">
+		<div id="gameboard" class="hidden">
+			<div id="player0" class="you">
 				<span class="name">You</span><br />
-				<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
+				<!--<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
 				<img src = "images/princess.jpg" style="z-index: 1; position: absolute; left: 50px;">
 				<img src = "images/princess.jpg" style="z-index: 2; position: absolute; left: 100px;">
 				<img src = "images/princess.jpg" style="z-index: 3; position: absolute; left: 150px;">
 				<img src = "images/princess.jpg" style="z-index: 4; position: absolute; left: 200px;">
-				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">
+				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">-->
 			</div>
-			<div id="player1" class="bot1">
+			<div id="player1" class="bot1 hidden">
 				<span class="name">Bot 1</span>
-				<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
-				<img src = "images/princess.jpg" style="z-index: 1; position: absolute; left: 50px;">
-				<img src = "images/princess.jpg" style="z-index: 2; position: absolute; left: 100px;">
-				<img src = "images/princess.jpg" style="z-index: 3; position: absolute; left: 150px;">
-				<img src = "images/princess.jpg" style="z-index: 4; position: absolute; left: 200px;">
-				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">
 			</div>
-			<div id="player2" class="bot2">
+			<div id="player2" class="bot2 hidden">
 				<span class="name">Bot 2</span><br />
-				<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
-				<img src = "images/princess.jpg" style="z-index: 1; position: absolute; left: 50px;">
-				<img src = "images/princess.jpg" style="z-index: 2; position: absolute; left: 100px;">
-				<img src = "images/princess.jpg" style="z-index: 3; position: absolute; left: 150px;">
-				<img src = "images/princess.jpg" style="z-index: 4; position: absolute; left: 200px;">
-				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">
 			</div>
-			<div id="player3" class="bot3">
+			<div id="player3" class="bot3 hidden">
 				<span class="name">Bot 3</span>
-				<img src = "images/princess.jpg" style="z-index: 0; position: absolute; left: 0px;">
-				<img src = "images/princess.jpg" style="z-index: 1; position: absolute; left: 50px;">
-				<img src = "images/princess.jpg" style="z-index: 2; position: absolute; left: 100px;">
-				<img src = "images/princess.jpg" style="z-index: 3; position: absolute; left: 150px;">
-				<img src = "images/princess.jpg" style="z-index: 4; position: absolute; left: 200px;">
-				<img src = "images/princess.jpg" style="z-index: 5; position: absolute; left: 250px;">
 			</div>
 		</div>
 	</body>
